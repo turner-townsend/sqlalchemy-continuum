@@ -182,6 +182,8 @@ class Builder(object):
         """
         for cls in version_classes:
             for prop in sa.inspect(cls).iterate_properties:
+                if prop.key == 'versions':
+                    continue
                 getattr(cls, prop.key).impl.active_history = True
 
     def create_column_aliases(self, version_classes):

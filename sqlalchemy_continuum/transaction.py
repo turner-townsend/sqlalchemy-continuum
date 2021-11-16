@@ -16,6 +16,7 @@ from .dialects.postgresql import (
 )
 from .exc import ImproperlyConfigured
 from .factory import ModelFactory
+from .utils import class_registry
 
 
 @compiles(sa.types.BigInteger, 'sqlite')
@@ -132,7 +133,7 @@ class TransactionFactory(ModelFactory):
 
             if manager.user_cls:
                 user_cls = manager.user_cls
-                registry = manager.declarative_base._decl_class_registry
+                registry = class_registry(manager.declarative_base)
 
                 if isinstance(user_cls, six.string_types):
                     try:

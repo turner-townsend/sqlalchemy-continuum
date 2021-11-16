@@ -1,3 +1,5 @@
+from .utils import class_registry
+
 class ModelFactory(object):
     model_name = None
 
@@ -6,7 +8,7 @@ class ModelFactory(object):
         Create model class but only if it doesn't already exist
         in declarative model registry.
         """
-        registry = manager.declarative_base._decl_class_registry
+        registry = class_registry(manager.declarative_base)
         if self.model_name not in registry:
             return self.create_class(manager)
         return registry[self.model_name]
