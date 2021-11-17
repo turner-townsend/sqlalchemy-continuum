@@ -450,15 +450,3 @@ class VersioningClauseAdapter(sa.sql.visitors.ReplacingCloningVisitor):
 
 def adapt_columns(expr):
     return VersioningClauseAdapter().traverse(expr)
-
-
-def class_registry(cls):
-    """
-    Function for dynamically getting class
-    registry dictionary from specified model.
-    """
-    try:
-        return dict(cls._sa_registry._class_registry)
-    except:
-        return dict(cls._decl_class_registry)
-    return

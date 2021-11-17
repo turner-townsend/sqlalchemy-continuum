@@ -133,12 +133,14 @@ class TransactionFactory(ModelFactory):
 
             if manager.user_cls:
                 user_cls = manager.user_cls
-                registry = class_registry(manager.declarative_base)
 
                 if isinstance(user_cls, six.string_types):
-                    try:
-                        user_cls = registry[user_cls]
-                    except KeyError:
+                    for mapper in manager.declarative_base.registry.mappers:
+                        clsname = mapper.class_.__name__
+                        if self.model_name == clsname:
+                            user_cls = mapper.class_
+                            break
+                    else:
                         raise ImproperlyConfigured(
                             'Could not build relationship between Transaction'
                             ' and %s. %s was not found in declarative class '
