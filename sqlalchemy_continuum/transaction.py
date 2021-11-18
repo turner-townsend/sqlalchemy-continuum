@@ -16,7 +16,6 @@ from .dialects.postgresql import (
 )
 from .exc import ImproperlyConfigured
 from .factory import ModelFactory
-from .utils import class_registry
 
 
 @compiles(sa.types.BigInteger, 'sqlite')
