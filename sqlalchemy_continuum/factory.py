@@ -1,5 +1,3 @@
-from .utils import class_registry
-
 class ModelFactory(object):
     model_name = None
 
