@@ -136,7 +136,7 @@ class TransactionFactory(ModelFactory):
                 if isinstance(user_cls, six.string_types):
                     for mapper in manager.declarative_base.registry.mappers:
                         clsname = mapper.class_.__name__
-                        if self.model_name == clsname:
+                        if user_cls == clsname:
                             user_cls = mapper.class_
                             break
                     else:
