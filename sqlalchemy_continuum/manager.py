@@ -145,8 +145,8 @@ class VersioningManager(object):
             'after_insert': self.track_inserts,
         }
         self.class_config_listeners = {
-            'instrument_class': self.builder.instrument_versioned_classes,
-            'after_configured': self.builder.configure_versioned_classes,
+            'instrument_class': (self.builder.instrument_versioned_classes, {}),
+            'after_configured': (self.builder.configure_versioned_classes, {'once': True}),
         }
 
         # A dictionary of units of work. Keys as connection objects and values
@@ -221,8 +221,8 @@ class VersioningManager(object):
         :param mapper:
             SQLAlchemy mapper to apply the class configuration listeners to
         """
-        for event_name, listener in self.class_config_listeners.items():
-            sa.event.listen(mapper, event_name, listener)
+        for event_name, (listener, kwargs) in self.class_config_listeners.items():
+            sa.event.listen(mapper, event_name, listener, **kwargs)
 
     def remove_class_configuration_listeners(self, mapper):
         """
